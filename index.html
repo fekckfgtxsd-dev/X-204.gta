@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Кодировка страницы -->
+    <meta charset="UTF-8">
+    <!-- Адаптивность для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Запрет индексации поисковиками -->
+    <meta name="robots" content="noindex">
+    
+    <title>Мемы Гта5 Онлайн</title>
+
+    <!-- Подключение шрифтов Google Fonts (Oswald и Russo One отлично поддерживают кириллицу в стиле GTA) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Russo+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === СБРОС СТАНДАРТНЫХ ОТСТУПОВ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* === ФОН В СТИЛЕ ЗАКАТА ЛОС-САНТОСА С АНИМАЦИЕЙ === */
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            /* Тёмный закатный градиент: глубокий фиолетовый, розовый и тёмно-оранжевый */
+            background: linear-gradient(-45deg, #0d061a, #260d33, #4a153b, #6e2129, #180926);
+            background-size: 400% 400%;
+            animation: sunsetGradient 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 60px;
+            overflow-x: hidden;
+        }
+
+        /* Плавное переливание фона */
+        @keyframes sunsetGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* === ШАПКА И ГЛАВНЫЙ ЗАГОЛОВОК === */
+        header {
+            text-align: center;
+            margin-bottom: 45px;
+            width: 100%;
+        }
+
+        .gta-title {
+            font-family: 'Oswald', 'Russo One', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4.8rem); /* Автоматический размер под экран */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            /* Градиент на самом тексте */
+            background: linear-gradient(180deg, #fff3b0 0%, #ff9900 50%, #ff2a85 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Контур и неоновое свечение */
+            filter: drop-shadow(0 4px 0px #000000) 
+                    drop-shadow(0 0 20px rgba(255, 102, 0, 0.6)) 
+                    drop-shadow(0 0 40px rgba(255, 42, 133, 0.4));
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+
+        .gta-title:hover {
+            transform: scale(1.02) rotate(-1deg);
+        }
+
+        /* === СЕТКА ДЛЯ КАРТОЧЕК С ВИДЕО (CSS GRID) === */
+        .video-grid {
+            display: grid;
+            /* Если карточка одна — она по центру; если добавить ещё — встанут в ряд */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 680px));
+            gap: 35px;
+            width: 100%;
+            max-width: 1400px;
+            justify-content: center;
+        }
+
+        /* === КАРТОЧКА ВИДЕО === */
+        .card {
+            background: rgba(20, 12, 34, 0.75);
+            border: 2px solid rgba(255, 136, 0, 0.35);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            /* Тень и неоновое свечение вокруг карточки */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+                        0 0 25px rgba(255, 85, 0, 0.2),
+                        inset 0 0 15px rgba(255, 0, 128, 0.1);
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        box-shadow 0.35s ease, 
+                        border-color 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Эффект лёгкого увеличения и усиления свечения при наведении */
+        .card:hover {
+            transform: translateY(-6px) scale(1.015);
+            border-color: rgba(255, 166, 0, 0.8);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85),
+                        0 0 35px rgba(255, 123, 0, 0.45),
+                        0 0 60px rgba(255, 0, 128, 0.25);
+        }
+
+        /* === ВИДЕОПЛЕЕР === */
+        .video-wrapper {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            margin-bottom: 18px;
+        }
+
+        video {
+            width: 100%;
+            max-height: 70vh;
+            display: block;
+            border-radius: 14px;
+            outline: none;
+        }
+
+        /* === ПОДПИСЬ ПОД ВИДЕО === */
+        .caption {
+            font-size: 1.15rem;
+            font-weight: 600;
+            text-align: center;
+            color: #f3e8ff;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* === КНОПКА "СМОТРЕТЬ ЕЩЁ" === */
+        .btn-more {
+            margin-top: 40px;
+            padding: 15px 42px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            background: linear-gradient(90deg, #ff512f 0%, #dd2476 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(221, 36, 118, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-more:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 81, 47, 0.75);
+            background: linear-gradient(90deg, #ff6a00 0%, #ee0979 100%);
+        }
+
+        .btn-more:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Всплывающее уведомление при нажатии на кнопку */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            background: rgba(15, 8, 26, 0.95);
+            border-left: 5px solid #ff9900;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            font-size: 0.95rem;
+            opacity: 0;
+            transform: translateY(30px);
+            pointer-events: none;
+            transition: all 0.35s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ === */
+        @media (max-width: 600px) {
+            body {
+                padding: 25px 12px 45px;
+            }
+            header {
+                margin-bottom: 25px;
+            }
+            .card {
+                padding: 14px;
+                border-radius: 16px;
+            }
+            .caption {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            .btn-more {
+                width: 100%;
+                max-width: 320px;
+                padding: 14px 20px;
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка сайта -->
+    <header>
+        <h1 class="gta-title">Мемы Гта5 Онлайн</h1>
+    </header>
+
+    <!-- Сетка с видео (сюда можно добавлять новые карточки) -->
+    <main class="video-grid">
+        
+        <!-- Карточка №1 -->
+        <div class="card">
+            <div class="video-wrapper">
+                <video controls preload="metadata" playsinline>
+                    <source src="videos/GTA1.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает встроенные видео.
+                </video>
+            </div>
+            <p class="caption">Когда просто зашёл покататься по Лос-Сантосу, но в сессии начался полный хаос</p>
+        </div>
+
+        <!-- 
+        ШАБЛОН ДЛЯ НОВОГО ВИДЕО (просто скопируй блок ниже и раскомментируй):
+        
+        <div class="card">
+            <div class="video-wrapper">
+                <video controls preload="metadata" playsinline>
+                    <source src="videos/GTA2.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает встроенные видео.
+                </video>
+            </div>
+            <p class="caption">Подпись ко второму видео</p>
+        </div>
+        -->
+
+    </main>
+
+    <!-- Кнопка под видео -->
+    <button class="btn-more" id="moreBtn">Смотреть ещё</button>
+
+    <!-- Всплывающая подсказка в стиле уведомлений GTA -->
+    <div class="toast" id="gtaToast">Лестер ищет новые мемы... Скоро загрузим ещё!</div>
+
+    <script>
+        // 1. Обработка кнопки "Смотреть ещё"
+        const moreBtn = document.getElementById('moreBtn');
+        const gtaToast = document.getElementById('gtaToast');
+        let toastTimeout;
+
+        moreBtn.addEventListener('click', () => {
+            gtaToast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                gtaToast.classList.remove('show');
+            }, 3000);
+        });
+
+        // 2. Удобная фишка для будущих видео: 
+        // если включить одно видео, все остальные автоматически ставятся на паузу
+        const allVideos = document.querySelectorAll('video');
+        allVideos.forEach(video => {
+            video.addEventListener('play', () => {
+                allVideos.forEach(otherVideo => {
+                    if (otherVideo !== video) {
+                        otherVideo.pause();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
