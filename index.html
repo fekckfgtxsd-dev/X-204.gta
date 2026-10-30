@@ -10,10 +10,10 @@
     
     <title>Мемы Гта5 Онлайн</title>
 
-    <!-- Подключение шрифтов Google Fonts (Oswald и Russo One отлично поддерживают кириллицу в стиле GTA) -->
+    <!-- Подключение шрифтов Google Fonts (Oswald и Russo One отлично подходят под стиль GTA) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Russo+One&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Russo+One&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* === СБРОС СТАНДАРТНЫХ ОТСТУПОВ === */
@@ -21,6 +21,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         /* === ФОН В СТИЛЕ ЗАКАТА ЛОС-САНТОСА С АНИМАЦИЕЙ === */
@@ -35,7 +39,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px 60px;
             overflow-x: hidden;
         }
 
@@ -46,56 +49,253 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* === ШАПКА И ГЛАВНЫЙ ЗАГОЛОВОК === */
-        header {
-            text-align: center;
-            margin-bottom: 45px;
+        /* === 1. ТИТУЛЬНЫЙ ЭКРАН (HERO) НА ВЕСЬ ЭКРАН === */
+        .hero {
+            min-height: 100vh;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
         }
 
         .gta-title {
             font-family: 'Oswald', 'Russo One', sans-serif;
-            font-size: clamp(2.5rem, 7vw, 4.8rem); /* Автоматический размер под экран */
+            font-size: clamp(3.2rem, 10vw, 7.5rem);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            /* Градиент на самом тексте */
-            background: linear-gradient(180deg, #fff3b0 0%, #ff9900 50%, #ff2a85 100%);
+            letter-spacing: 4px;
+            line-height: 1.05;
+            /* Закатный градиент на самом тексте */
+            background: linear-gradient(180deg, #fff6b7 0%, #ff9900 48%, #ff1e80 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* Контур и неоновое свечение */
-            filter: drop-shadow(0 4px 0px #000000) 
-                    drop-shadow(0 0 20px rgba(255, 102, 0, 0.6)) 
-                    drop-shadow(0 0 40px rgba(255, 42, 133, 0.4));
-            transition: transform 0.3s ease;
             user-select: none;
+            /* Плавное появление при загрузке + бесконечная пульсация свечения */
+            animation: titleAppear 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+                       titlePulse 3.5s ease-in-out infinite alternate;
         }
 
-        .gta-title:hover {
-            transform: scale(1.02) rotate(-1deg);
+        /* Анимация появления заголовка */
+        @keyframes titleAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        /* === СЕТКА ДЛЯ КАРТОЧЕК С ВИДЕО (CSS GRID) === */
-        .video-grid {
-            display: grid;
-            /* Если карточка одна — она по центру; если добавить ещё — встанут в ряд */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 680px));
-            gap: 35px;
+        /* Анимация пульсации неонового свечения заголовка */
+        @keyframes titlePulse {
+            0% {
+                filter: drop-shadow(0 6px 0px #000000)
+                        drop-shadow(0 0 20px rgba(255, 115, 0, 0.55))
+                        drop-shadow(0 0 40px rgba(255, 30, 128, 0.35));
+            }
+            100% {
+                filter: drop-shadow(0 6px 0px #000000)
+                        drop-shadow(0 0 35px rgba(255, 153, 0, 0.9))
+                        drop-shadow(0 0 70px rgba(255, 30, 128, 0.7));
+            }
+        }
+
+        .hero-subtitle {
+            margin-top: 20px;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: #f8d9ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.85;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            animation: titleAppear 1.5s ease forwards;
+        }
+
+        /* Кнопка-стрелка прокрутки вниз на первом экране */
+        .scroll-down {
+            position: absolute;
+            bottom: 35px;
+            color: #ff9900;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down:hover {
+            opacity: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* === ОБЩИЙ КОНТЕЙНЕР КОНТЕНТА === */
+        .content-container {
             width: 100%;
             max-width: 1400px;
+            padding: 20px 20px 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* === 2. СЕКЦИЯ ТАЙМЕРОВ ОБРАТНОГО ОТСЧЁТА === */
+        .timers-section {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .timer-card {
+            background: rgba(18, 10, 31, 0.78);
+            border: 2px solid rgba(255, 136, 0, 0.45);
+            border-radius: 22px;
+            padding: 28px 24px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75),
+                        0 0 25px rgba(255, 85, 0, 0.2),
+                        inset 0 0 20px rgba(255, 0, 128, 0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timer-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 153, 0, 0.85);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85),
+                        0 0 35px rgba(255, 115, 0, 0.4);
+        }
+
+        .timer-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff3b0;
+            margin-bottom: 22px;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9),
+                         0 0 15px rgba(255, 153, 0, 0.5);
+        }
+
+        /* Сетка цифр внутри таймера (4 блока в ряд на ПК) */
+        .timer-boxes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .time-box {
+            background: rgba(10, 5, 20, 0.85);
+            border: 1px solid rgba(255, 42, 133, 0.4);
+            border-radius: 14px;
+            padding: 14px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 12px rgba(255, 42, 133, 0.15);
+        }
+
+        .time-value {
+            font-family: 'Russo One', 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            color: #ffffff;
+            line-height: 1.1;
+            text-shadow: 0 0 12px rgba(255, 153, 0, 0.6);
+        }
+
+        /* Пульсация свечения специально для секунд */
+        .time-value.seconds-pulse {
+            color: #ff9900;
+            animation: secondsGlow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes secondsGlow {
+            0% {
+                text-shadow: 0 0 8px rgba(255, 153, 0, 0.4),
+                             0 0 16px rgba(255, 42, 133, 0.3);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 0 0 18px rgba(255, 153, 0, 1),
+                             0 0 32px rgba(255, 42, 133, 0.85);
+                transform: scale(1.06);
+            }
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d8b4e2;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* Сообщение, когда GTA 6 уже вышла */
+        .timer-released {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 20px 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
+            animation: secondsGlow 1.5s infinite alternate;
+        }
+
+        /* === 3. СЕТКА ДЛЯ КАРТОЧЕК С ВИДЕО (CSS GRID) === */
+        .section-heading {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-shadow: 0 4px 0 #000, 0 0 20px rgba(255, 102, 0, 0.6);
+            text-align: center;
+        }
+
+        .video-grid {
+            display: grid;
+            /* Карточки идут слева направо и переносятся на новую строку, когда мало места */
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            width: 100%;
         }
 
         /* === КАРТОЧКА ВИДЕО === */
         .card {
-            background: rgba(20, 12, 34, 0.75);
+            background: rgba(20, 12, 34, 0.78);
             border: 2px solid rgba(255, 136, 0, 0.35);
             border-radius: 20px;
-            padding: 20px;
+            padding: 18px;
             backdrop-filter: blur(12px);
-            /* Тень и неоновое свечение вокруг карточки */
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
-                        0 0 25px rgba(255, 85, 0, 0.2),
+                        0 0 25px rgba(255, 85, 0, 0.18),
                         inset 0 0 15px rgba(255, 0, 128, 0.1);
             transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), 
                         box-shadow 0.35s ease, 
@@ -105,10 +305,10 @@
             align-items: center;
         }
 
-        /* Эффект лёгкого увеличения и усиления свечения при наведении */
+        /* Лёгкое увеличение и свечение при наведении */
         .card:hover {
-            transform: translateY(-6px) scale(1.015);
-            border-color: rgba(255, 166, 0, 0.8);
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255, 166, 0, 0.85);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85),
                         0 0 35px rgba(255, 123, 0, 0.45),
                         0 0 60px rgba(255, 0, 128, 0.25);
@@ -121,31 +321,34 @@
             overflow: hidden;
             background: #000;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         video {
             width: 100%;
-            max-height: 70vh;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            background: #000;
             display: block;
             border-radius: 14px;
             outline: none;
         }
 
-        /* === ПОДПИСЬ ПОД ВИДЕО === */
+        /* === НАЗВАНИЕ МЕМА ПОД ВИДЕО === */
         .caption {
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
             text-align: center;
             color: #f3e8ff;
-            margin-bottom: 20px;
+            margin-top: auto;
             line-height: 1.4;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         /* === КНОПКА "СМОТРЕТЬ ЕЩЁ" === */
         .btn-more {
-            margin-top: 40px;
+            margin-top: 50px;
             padding: 15px 42px;
             font-family: 'Oswald', sans-serif;
             font-size: 1.3rem;
@@ -185,6 +388,7 @@
             transform: translateY(30px);
             pointer-events: none;
             transition: all 0.35s ease;
+            z-index: 100;
         }
 
         .toast.show {
@@ -192,21 +396,36 @@
             transform: translateY(0);
         }
 
-        /* === АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ === */
-        @media (max-width: 600px) {
-            body {
-                padding: 25px 12px 45px;
+        /* === АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И ТЕЛЕФОНОВ === */
+        @media (max-width: 900px) {
+            /* На планшетах и телефонах карточки таймеров встают друг под другом */
+            .timers-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
-            header {
-                margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .content-container {
+                padding: 15px 14px 50px;
+            }
+            /* На телефоне блоки цифр внутри таймера становятся в сетку 2x2 */
+            .timer-boxes {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .timer-card {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+            /* На телефоне карточки видео идут строго по одной в ряд */
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
             }
             .card {
                 padding: 14px;
                 border-radius: 16px;
-            }
-            .caption {
-                font-size: 1rem;
-                margin-bottom: 10px;
             }
             .btn-more {
                 width: 100%;
@@ -219,49 +438,250 @@
 </head>
 <body>
 
-    <!-- Шапка сайта -->
-    <header>
+    <!-- 1. ТИТУЛЬНЫЙ ЭКРАН НА ВЕСЬ ЭКРАН (100vh) -->
+    <header class="hero">
         <h1 class="gta-title">Мемы Гта5 Онлайн</h1>
+        <p class="hero-subtitle">Лучшие моменты из сессий Лос-Сантоса</p>
+        <a href="#main-content" class="scroll-down">
+            <span>Листай вниз</span>
+            <span>▼</span>
+        </a>
     </header>
 
-    <!-- Сетка с видео (сюда можно добавлять новые карточки) -->
-    <main class="video-grid">
-        
-        <!-- Карточка №1 -->
-        <div class="card">
-            <div class="video-wrapper">
-                <video controls preload="metadata" playsinline>
-                    <source src="videos/GTA1.mp4" type="video/mp4">
-                    Ваш браузер не поддерживает встроенные видео.
-                </video>
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="content-container" id="main-content">
+
+        <!-- 2. СЕКЦИЯ С ТАЙМЕРАМИ -->
+        <section class="timers-section" aria-label="Таймеры обратного отсчёта">
+            
+            <!-- Таймер 1: До конца недели в GTA Online -->
+            <div class="timer-card">
+                <h2 class="timer-title">До конца недели в GTA Online</h2>
+                <div class="timer-boxes">
+                    <div class="time-box">
+                        <span class="time-value" id="gta5-days">00</span>
+                        <span class="time-label">Дней</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value" id="gta5-hours">00</span>
+                        <span class="time-label">Часов</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value" id="gta5-minutes">00</span>
+                        <span class="time-label">Минут</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value seconds-pulse" id="gta5-seconds">00</span>
+                        <span class="time-label">Секунд</span>
+                    </div>
+                </div>
             </div>
-            <p class="caption">Когда просто зашёл покататься по Лос-Сантосу, но в сессии начался полный хаос</p>
-        </div>
 
-        <!-- 
-        ШАБЛОН ДЛЯ НОВОГО ВИДЕО (просто скопируй блок ниже и раскомментируй):
-        
-        <div class="card">
-            <div class="video-wrapper">
-                <video controls preload="metadata" playsinline>
-                    <source src="videos/GTA2.mp4" type="video/mp4">
-                    Ваш браузер не поддерживает встроенные видео.
-                </video>
+            <!-- Таймер 2: До выхода GTA 6 -->
+            <div class="timer-card">
+                <h2 class="timer-title">До выхода GTA 6</h2>
+                <div id="gta6-timer-content" class="timer-boxes">
+                    <div class="time-box">
+                        <span class="time-value" id="gta6-days">00</span>
+                        <span class="time-label">Дней</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value" id="gta6-hours">00</span>
+                        <span class="time-label">Часов</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value" id="gta6-minutes">00</span>
+                        <span class="time-label">Минут</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-value seconds-pulse" id="gta6-seconds">00</span>
+                        <span class="time-label">Секунд</span>
+                    </div>
+                </div>
             </div>
-            <p class="caption">Подпись ко второму видео</p>
-        </div>
-        -->
 
-    </main>
+        </section>
 
-    <!-- Кнопка под видео -->
-    <button class="btn-more" id="moreBtn">Смотреть ещё</button>
+        <!-- 3. СЕТКА С ВИДЕО (заполняется автоматически из JavaScript) -->
+        <h2 class="section-heading">Свежие видео</h2>
+        <main class="video-grid" id="videoGrid"></main>
+
+        <!-- Кнопка под видео -->
+        <button class="btn-more" id="moreBtn">Смотреть ещё</button>
+
+    </div>
 
     <!-- Всплывающая подсказка в стиле уведомлений GTA -->
     <div class="toast" id="gtaToast">Лестер ищет новые мемы... Скоро загрузим ещё!</div>
 
     <script>
-        // 1. Обработка кнопки "Смотреть ещё"
+        /* =====================================================================
+           1. НАСТРОЙКИ ДАТ ДЛЯ ТАЙМЕРОВ (здесь их легко поменять)
+           ===================================================================== */
+
+        // ДАТА ВЫХОДА GTA 6 (по местному времени посетителя сайта).
+        // Формат: 'ГГГГ-ММ-ДДTЧЧ:ММ:СС'. Если Rockstar перенесёт релиз, просто поменяй цифры ниже:
+        const GTA6_RELEASE_DATE = new Date('2026-11-19T00:00:00');
+
+        // НАСТРОЙКИ ЕЖЕНЕДЕЛЬНОГО ОБНОВЛЕНИЯ GTA ONLINE (по всемирному времени UTC).
+        // День недели: 0 — воскресенье, 1 — понедельник, ..., 4 — четверг, 6 — суббота.
+        const GTA_ONLINE_RESET_DAY_UTC = 4;   // Четверг
+        const GTA_ONLINE_RESET_HOUR_UTC = 10; // 10:00 по UTC
+
+
+        /* =====================================================================
+           2. СПИСОК ВИДЕО НА САЙТЕ
+           ===================================================================== */
+
+        // КАК ДОБАВИТЬ НОВОЕ ВИДЕО:
+        // 1. Положи видеофайл в папку "videos" (например, GTA3.mp4).
+        // 2. Поставь запятую после последней фигурной скобки } и добавь новую строчку по образцу:
+        //    { title: "Мем 3", src: "videos/GTA3.mp4" }
+        const videos = [
+            { title: "Мем 1", src: "videos/GTA1.mp4" },
+            { title: "Мем 2", src: "videos/GTA2.mp4" }
+        ];
+
+
+        /* =====================================================================
+           3. АВТОМАТИЧЕСКОЕ СОЗДАНИЕ КАРТОЧЕК ВИДЕО
+           ===================================================================== */
+        const videoGrid = document.getElementById('videoGrid');
+
+        function renderVideos() {
+            videoGrid.innerHTML = '';
+
+            videos.forEach(item => {
+                // Создаём карточку <div class="card">
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                card.innerHTML = `
+                    <div class="video-wrapper">
+                        <video controls preload="metadata" playsinline>
+                            <source src="${item.src}" type="video/mp4">
+                            Ваш браузер не поддерживает встроенные видео.
+                        </video>
+                    </div>
+                    <p class="caption">${item.title}</p>
+                `;
+
+                videoGrid.appendChild(card);
+            });
+
+            // Если включить одно видео, все остальные автоматически ставятся на паузу
+            const allVideos = videoGrid.querySelectorAll('video');
+            allVideos.forEach(video => {
+                video.addEventListener('play', () => {
+                    allVideos.forEach(otherVideo => {
+                        if (otherVideo !== video) {
+                            otherVideo.pause();
+                        }
+                    });
+                });
+            });
+        }
+
+        renderVideos();
+
+
+        /* =====================================================================
+           4. ЛОГИКА РАБОТЫ ТАЙМЕРОВ ОБРАТНОГО ОТСЧЁТА
+           ===================================================================== */
+
+        // Функция добавляет ведущий ноль, чтобы цифры всегда были минимум из двух знаков (05 вместо 5)
+        function formatTwoDigits(num) {
+            return String(num).padStart(2, '0');
+        }
+
+        // Вычисление ближайшего четверга 10:00 по UTC
+        function getNextGtaOnlineReset() {
+            const now = new Date();
+            const target = new Date(Date.UTC(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate(),
+                GTA_ONLINE_RESET_HOUR_UTC,
+                0, 0, 0
+            ));
+
+            const currentDayUTC = now.getUTCDay();
+            let daysUntilReset = (GTA_ONLINE_RESET_DAY_UTC - currentDayUTC + 7) % 7;
+
+            // Если сегодня четверг, но 10:00 по UTC уже прошло — считаем до следующего четверга
+            if (daysUntilReset === 0 && now >= target) {
+                daysUntilReset = 7;
+            }
+
+            target.setUTCDate(target.getUTCDate() + daysUntilReset);
+            return target;
+        }
+
+        // Функция расчёта оставшегося времени (дни, часы, минуты, секунды)
+        function getTimeRemaining(targetDate) {
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            return { total: diff, days, hours, minutes, seconds };
+        }
+
+        // Элементы таймера GTA Online
+        const gta5DaysEl = document.getElementById('gta5-days');
+        const gta5HoursEl = document.getElementById('gta5-hours');
+        const gta5MinutesEl = document.getElementById('gta5-minutes');
+        const gta5SecondsEl = document.getElementById('gta5-seconds');
+
+        // Элементы таймера GTA 6
+        const gta6ContainerEl = document.getElementById('gta6-timer-content');
+        const gta6DaysEl = document.getElementById('gta6-days');
+        const gta6HoursEl = document.getElementById('gta6-hours');
+        const gta6MinutesEl = document.getElementById('gta6-minutes');
+        const gta6SecondsEl = document.getElementById('gta6-seconds');
+        let gta6ReleasedShown = false;
+
+        function updateTimers() {
+            // 1. Обновляем таймер недели в GTA Online
+            const nextResetDate = getNextGtaOnlineReset();
+            const gta5Time = getTimeRemaining(nextResetDate);
+
+            gta5DaysEl.textContent = formatTwoDigits(gta5Time.days);
+            gta5HoursEl.textContent = formatTwoDigits(gta5Time.hours);
+            gta5MinutesEl.textContent = formatTwoDigits(gta5Time.minutes);
+            gta5SecondsEl.textContent = formatTwoDigits(gta5Time.seconds);
+
+            // 2. Обновляем таймер до выхода GTA 6
+            const gta6Time = getTimeRemaining(GTA6_RELEASE_DATE);
+
+            if (gta6Time.total <= 0) {
+                if (!gta6ReleasedShown) {
+                    gta6ContainerEl.outerHTML = '<div class="timer-released">GTA 6 уже вышла!</div>';
+                    gta6ReleasedShown = true;
+                }
+            } else {
+                gta6DaysEl.textContent = formatTwoDigits(gta6Time.days);
+                gta6HoursEl.textContent = formatTwoDigits(gta6Time.hours);
+                gta6MinutesEl.textContent = formatTwoDigits(gta6Time.minutes);
+                gta6SecondsEl.textContent = formatTwoDigits(gta6Time.seconds);
+            }
+        }
+
+        // Запускаем таймеры сразу при открытии страницы и обновляем каждую секунду
+        updateTimers();
+        setInterval(updateTimers, 1000);
+
+
+        /* =====================================================================
+           5. КНОПКА "СМОТРЕТЬ ЕЩЁ" И УВЕДОМЛЕНИЕ
+           ===================================================================== */
         const moreBtn = document.getElementById('moreBtn');
         const gtaToast = document.getElementById('gtaToast');
         let toastTimeout;
@@ -272,19 +692,6 @@
             toastTimeout = setTimeout(() => {
                 gtaToast.classList.remove('show');
             }, 3000);
-        });
-
-        // 2. Удобная фишка для будущих видео: 
-        // если включить одно видео, все остальные автоматически ставятся на паузу
-        const allVideos = document.querySelectorAll('video');
-        allVideos.forEach(video => {
-            video.addEventListener('play', () => {
-                allVideos.forEach(otherVideo => {
-                    if (otherVideo !== video) {
-                        otherVideo.pause();
-                    }
-                });
-            });
         });
     </script>
 </body>
