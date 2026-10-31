@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Кодировка страницы -->
+    <meta charset="UTF-8">
+    <!-- Адаптивность для мобильных устройств -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Запрет индексации поисковиками -->
+    <meta name="robots" content="noindex">
+    
+    <title>Цитаты — Мемы Гта5 Онлайн</title>
+
+    <!-- Подключение шрифтов Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Russo+One&family=Inter:ital,wght@0,400;0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === СБРОС СТАНДАРТНЫХ ОТСТУПОВ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* === ФОН В СТИЛЕ ЗАКАТА ЛОС-САНТОСА С АНИМАЦИЕЙ === */
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            background: linear-gradient(-45deg, #0d061a, #260d33, #4a153b, #6e2129, #180926);
+            background-size: 400% 400%;
+            animation: sunsetGradient 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 18px 70px;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        @keyframes sunsetGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+        }
+
+        /* === ВЕРХНЯЯ ПАНЕЛЬ НАВИГАЦИИ === */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 26px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            background: rgba(20, 12, 34, 0.85);
+            border: 2px solid rgba(255, 153, 0, 0.6);
+            border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+                        0 0 15px rgba(255, 153, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-3px);
+            border-color: #ffd700;
+            background: rgba(255, 115, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
+                        0 0 25px rgba(255, 153, 0, 0.6);
+        }
+
+        .btn-nav-heists {
+            border-color: rgba(255, 42, 133, 0.7);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+                        0 0 15px rgba(255, 42, 133, 0.3);
+        }
+
+        .btn-nav-heists:hover {
+            border-color: #ff2a85;
+            background: rgba(255, 42, 133, 0.25);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
+                        0 0 25px rgba(255, 42, 133, 0.7);
+        }
+
+        /* === ГЛАВНЫЙ ЗАГОЛОВОК СТРАНИЦЫ === */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title {
+            font-family: 'Oswald', 'Russo One', sans-serif;
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, #fff6b7 0%, #ff9900 48%, #ff1e80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 0px #000000)
+                    drop-shadow(0 0 25px rgba(255, 115, 0, 0.6))
+                    drop-shadow(0 0 50px rgba(255, 30, 128, 0.4));
+            user-select: none;
+        }
+
+        /* === ЗАГОЛОВКИ РАЗДЕЛОВ === */
+        .quotes-section {
+            margin-bottom: 60px;
+        }
+
+        .section-heading {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.4rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 26px;
+            color: #fff3b0;
+            text-shadow: 0 4px 0 #000, 0 0 20px rgba(255, 153, 0, 0.6);
+            border-left: 5px solid #ff9900;
+            padding-left: 16px;
+        }
+
+        .section-heading.forbidden-heading {
+            color: #ffd6e0;
+            text-shadow: 0 4px 0 #000, 0 0 22px rgba(255, 30, 90, 0.8);
+            border-left-color: #ff1e56;
+        }
+
+        /* === СЕТКА КАРТОЧЕК ЦИТАТ (CSS GRID) === */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+            width: 100%;
+        }
+
+        /* Сообщение, если в разделе нет цитат */
+        .empty-message {
+            grid-column: 1 / -1;
+            background: rgba(20, 12, 34, 0.65);
+            border: 1px dashed rgba(255, 153, 0, 0.4);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #d8b4e2;
+        }
+
+        /* === КАРТОЧКА ЦИТАТЫ === */
+        .quote-card {
+            position: relative;
+            background: rgba(20, 12, 34, 0.82);
+            border: 2px solid rgba(255, 136, 0, 0.38);
+            border-radius: 20px;
+            padding: 26px 24px 22px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7),
+                        0 0 25px rgba(255, 85, 0, 0.16),
+                        inset 0 0 15px rgba(255, 0, 128, 0.08);
+            transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        box-shadow 0.35s ease,
+                        border-color 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255, 166, 0, 0.9);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85),
+                        0 0 35px rgba(255, 123, 0, 0.45),
+                        0 0 60px rgba(255, 0, 128, 0.25);
+        }
+
+        /* Особая рамка и свечение для запретных слов */
+        .quote-card.forbidden-card {
+            border-color: rgba(255, 30, 86, 0.45);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75),
+                        0 0 25px rgba(255, 30, 86, 0.2),
+                        inset 0 0 18px rgba(255, 30, 86, 0.1);
+        }
+
+        .quote-card.forbidden-card:hover {
+            border-color: rgba(255, 42, 109, 0.95);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.88),
+                        0 0 38px rgba(255, 30, 86, 0.55),
+                        0 0 65px rgba(255, 0, 85, 0.3);
+        }
+
+        /* Большая декоративная кавычка на фоне карточки */
+        .quote-mark {
+            position: absolute;
+            top: 6px;
+            right: 18px;
+            font-family: Georgia, serif;
+            font-size: 6.5rem;
+            line-height: 1;
+            color: rgba(255, 153, 0, 0.13);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .forbidden-card .quote-mark {
+            color: rgba(255, 30, 86, 0.14);
+        }
+
+        /* Красная метка "🚫 ЗАПРЕТНОЕ СЛОВО" */
+        .forbidden-label {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            gap: 6px;
+            background: linear-gradient(90deg, #d31027 0%, #ea384d 100%);
+            color: #ffffff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 50px;
+            border: 1px solid #ff758f;
+            box-shadow: 0 0 15px rgba(255, 30, 86, 0.6);
+            margin-bottom: 12px;
+            z-index: 1;
+        }
+
+        /* Бейджи ограбления и подхода/места */
+        .badges-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+            z-index: 1;
+        }
+
+        .badge {
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 5px 11px;
+            border-radius: 8px;
+            background: rgba(10, 5, 20, 0.8);
+            border: 1px solid rgba(255, 153, 0, 0.4);
+            color: #fff3b0;
+        }
+
+        .badge.badge-detail {
+            border-color: rgba(0, 229, 255, 0.45);
+            color: #ccf9ff;
+        }
+
+        /* Поясняющая подпись для запретного слова */
+        .forbidden-context {
+            font-size: 0.88rem;
+            color: #ffb3c6;
+            margin-bottom: 14px;
+            line-height: 1.4;
+            z-index: 1;
+        }
+
+        /* Текст самой цитаты */
+        .quote-text {
+            font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+            font-style: italic;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 18px;
+            line-height: 1.4;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+            z-index: 1;
+        }
+
+        /* Подпись автора */
+        .quote-author-line {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            color: #d8b4e2;
+            margin-top: auto;
+            z-index: 1;
+        }
+
+        /* Оранжевая подсветка для ArtemFix21 */
+        .author-artem {
+            color: #ff9900;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 153, 0, 0.7);
+        }
+
+        /* Голубая подсветка для Vovanplayer205 */
+        .author-vovan {
+            color: #00e5ff;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.75);
+        }
+
+        .author-default {
+            color: #fff3b0;
+            font-weight: 700;
+        }
+
+        /* Блок даты и живого таймера (если указана дата) */
+        .quote-meta {
+            width: 100%;
+            background: rgba(10, 5, 20, 0.65);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+            border-radius: 12px;
+            padding: 9px 12px;
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px 12px;
+            font-size: 0.85rem;
+            z-index: 1;
+        }
+
+        .quote-date {
+            color: #d8b4e2;
+            font-weight: 600;
+        }
+
+        .quote-elapsed {
+            color: #ffae00;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(255, 153, 0, 0.45);
+        }
+
+        /* === АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ === */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 14px 50px;
+            }
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-nav {
+                width: 100%;
+            }
+            .quotes-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .quote-card {
+                padding: 22px 18px 18px;
+                border-radius: 16px;
+            }
+            .quote-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Верхние кнопки навигации -->
+        <nav class="top-bar" aria-label="Навигация по сайту">
+            <a href="index.html" class="btn-nav">← Назад к мемам</a>
+            <a href="heists.html" class="btn-nav btn-nav-heists">🏦 Ограбления</a>
+        </nav>
+
+        <!-- Заголовок страницы -->
+        <header>
+            <h1 class="page-title">Цитаты</h1>
+        </header>
+
+        <!-- Раздел 1: Обычные цитаты -->
+        <section class="quotes-section" aria-label="Обычные цитаты">
+            <h2 class="section-heading">Обычные цитаты</h2>
+            <div class="quotes-grid" id="normalQuotesGrid"></div>
+        </section>
+
+        <!-- Раздел 2: Запретные слова во время ограблений -->
+        <section class="quotes-section" aria-label="Запретные слова во время ограблений">
+            <h2 class="section-heading forbidden-heading">Запретные слова во время ограблений</h2>
+            <div class="quotes-grid" id="forbiddenQuotesGrid"></div>
+        </section>
+
+    </div>
+
+    <script>
+        /* =====================================================================
+           1. МАССИВ ВСЕХ ЦИТАТ
+           ===================================================================== */
+
+        // КАК ДОБАВИТЬ НОВУЮ ЦИТАТУ ОДНОЙ СТРОЧКОЙ:
+        // Поставь запятую после последнего элемента и добавь объект:
+        // - Обычная цитата:   { text: "Текст цитаты", author: "ArtemFix21", section: "normal", date: "2026-10-30T18:00:00+02:00" }
+        // - Запретное слово:  { text: "Текст", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Штурм" }
+        // (Поля heist, approach, place и date необязательные — если их нет, просто не пиши их).
+        const quotes = [
+            // Раздел "normal" (Обычные цитаты)
+            { text: "Васаби из раста", author: "ArtemFix21", section: "normal" },
+            { text: "Пуцы Кацы", author: "ArtemFix21", section: "normal" },
+            { text: "Похоже ты нас везешь к Руслану человеку", author: "ArtemFix21", section: "normal", date: "2026-10-23T18:05:37+02:00" },
+
+            // Раздел "forbidden" (Запретные слова во время ограблений)
+            { text: "Щас крутая катсцена будет", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Штурм", date: "2026-10-04T17:23:45+02:00" },
+            { text: "Привет Сладкий", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Обман" },
+            { text: "Пьяное бревно", author: "ArtemFix21", section: "forbidden", heist: "The Cayo Perico Heist", place: "Возле канализации для входа в комплекс" }
+        ];
+
+
+        /* =====================================================================
+           2. ФУНКЦИИ ФОРМАТИРОВАНИЯ ДАТ И АВТОРОВ
+           ===================================================================== */
+        const MONTHS_RU = [
+            'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+        ];
+
+        // Превращает строку "2026-10-04T17:23:45+02:00" в "4 октября 2026, 17:23"
+        function formatDisplayDate(isoString) {
+            const match = isoString.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+            if (match) {
+                const year = match[1];
+                const monthIndex = parseInt(match[2], 10) - 1;
+                const day = parseInt(match[3], 10);
+                const hours = match[4];
+                const minutes = match[5];
+                return `${day} ${MONTHS_RU[monthIndex]} ${year}, ${hours}:${minutes}`;
+            }
+            return isoString;
+        }
+
+        // Выбирает цветной CSS-класс для автора
+        function getAuthorClass(author) {
+            if (author === 'ArtemFix21') return 'author-artem';
+            if (author === 'Vovanplayer205') return 'author-vovan';
+            return 'author-default';
+        }
+
+        // Формирует читаемую подпись для запретного слова
+        function buildForbiddenDescription(item) {
+            if (!item.heist) return '';
+            let desc = `Запретное слово во время ограбления ${item.heist}`;
+            if (item.approach) {
+                const formattedApproach = item.approach.replace(/^Подход:/i, 'подход:');
+                desc += `, ${formattedApproach}`;
+            } else if (item.place) {
+                desc += `, место: ${item.place}`;
+            }
+            return desc;
+        }
+
+
+        /* =====================================================================
+           3. АВТОМАТИЧЕСКОЕ СОЗДАНИЕ КАРТОЧЕК ЦИТАТ
+           ===================================================================== */
+        const normalGrid = document.getElementById('normalQuotesGrid');
+        const forbiddenGrid = document.getElementById('forbiddenQuotesGrid');
+
+        function renderQuotes() {
+            normalGrid.innerHTML = '';
+            forbiddenGrid.innerHTML = '';
+
+            let normalCount = 0;
+            let forbiddenCount = 0;
+
+            quotes.forEach((item, index) => {
+                const isForbidden = item.section === 'forbidden';
+                const card = document.createElement('article');
+                card.className = isForbidden ? 'quote-card forbidden-card' : 'quote-card';
+
+                // Верхний блок для запретных слов (красная метка + бейджи + описание)
+                let forbiddenHeaderHTML = '';
+                if (isForbidden) {
+                    let badgesHTML = '';
+                    if (item.heist) {
+                        badgesHTML += `<span class="badge">${item.heist}</span>`;
+                    }
+                    if (item.approach) {
+                        badgesHTML += `<span class="badge badge-detail">${item.approach}</span>`;
+                    }
+                    if (item.place) {
+                        badgesHTML += `<span class="badge badge-detail">${item.place}</span>`;
+                    }
+
+                    const contextText = buildForbiddenDescription(item);
+
+                    forbiddenHeaderHTML = `
+                        <div class="forbidden-label">🚫 ЗАПРЕТНОЕ СЛОВО</div>
+                        ${badgesHTML ? `<div class="badges-row">${badgesHTML}</div>` : ''}
+                        ${contextText ? `<div class="forbidden-context">${contextText}</div>` : ''}
+                    `;
+                }
+
+                // Нижний блок с датой и таймером (показывается только если есть date)
+                let dateBlockHTML = '';
+                if (item.date) {
+                    const displayDate = formatDisplayDate(item.date);
+                    dateBlockHTML = `
+                        <div class="quote-meta">
+                            <span class="quote-date">${displayDate}</span>
+                            <span class="quote-elapsed" id="quote-elapsed-${index}">Прошло: расчёт...</span>
+                        </div>
+                    `;
+                }
+
+                const authorClass = getAuthorClass(item.author);
+
+                card.innerHTML = `
+                    <span class="quote-mark" aria-hidden="true">“</span>
+                    ${forbiddenHeaderHTML}
+                    <p class="quote-text">«${item.text}»</p>
+                    <p class="quote-author-line">— <span class="${authorClass}">${item.author}</span></p>
+                    ${dateBlockHTML}
+                `;
+
+                if (isForbidden) {
+                    forbiddenGrid.appendChild(card);
+                    forbiddenCount++;
+                } else {
+                    normalGrid.appendChild(card);
+                    normalCount++;
+                }
+            });
+
+            // Если в каком-то разделе нет цитат — показываем "Пока пусто"
+            if (normalCount === 0) {
+                normalGrid.innerHTML = '<div class="empty-message">Пока пусто</div>';
+            }
+            if (forbiddenCount === 0) {
+                forbiddenGrid.innerHTML = '<div class="empty-message">Пока пусто</div>';
+            }
+        }
+
+        // Обновление живых таймеров "Прошло: X дн. Y ч. Z мин. W сек."
+        function updateQuoteTimers() {
+            const now = new Date();
+
+            quotes.forEach((item, index) => {
+                if (!item.date) return;
+
+                const elapsedEl = document.getElementById(`quote-elapsed-${index}`);
+                if (!elapsedEl) return;
+
+                const createdDate = new Date(item.date);
+                const diff = Math.max(0, now - createdDate);
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                elapsedEl.textContent = `Прошло: ${days} дн. ${hours} ч. ${minutes} мин. ${seconds} сек.`;
+            });
+        }
+
+        renderQuotes();
+        updateQuoteTimers();
+        setInterval(updateQuoteTimers, 1000);
+    </script>
+</body>
+</html>

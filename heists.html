@@ -50,7 +50,7 @@
             max-width: 1200px;
         }
 
-        /* === ВЕРХНЯЯ ПАНЕЛЬ И КНОПКА НАЗАД === */
+        /* === ВЕРХНЯЯ ПАНЕЛЬ И КНОПКИ НАВИГАЦИИ === */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -60,9 +60,17 @@
             margin-bottom: 25px;
         }
 
+        .top-nav-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
         .btn-back {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 12px 26px;
             font-family: 'Oswald', sans-serif;
@@ -80,11 +88,25 @@
         }
 
         .btn-back:hover {
-            transform: translateX(-4px);
+            transform: translateY(-3px);
             border-color: #ffd700;
             background: rgba(255, 115, 0, 0.2);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
                         0 0 25px rgba(255, 153, 0, 0.6);
+        }
+
+        /* Голубое неоновое свечение для кнопки Цитат */
+        .btn-quotes-link {
+            border-color: #00e5ff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+                        0 0 15px rgba(0, 229, 255, 0.35);
+        }
+
+        .btn-quotes-link:hover {
+            border-color: #00f2fe;
+            background: rgba(0, 229, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
+                        0 0 25px rgba(0, 229, 255, 0.7);
         }
 
         .btn-toggle-all {
@@ -404,6 +426,15 @@
             body {
                 padding: 20px 12px 45px;
             }
+            .top-bar, .top-nav-group {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+            }
+            .btn-back, .btn-toggle-all {
+                width: 100%;
+                text-align: center;
+            }
             .accordion-header {
                 padding: 16px 16px;
             }
@@ -424,9 +455,12 @@
 
     <div class="container">
 
-        <!-- Верхняя навигация -->
+        <!-- Верхняя навигация (добавлена кнопка Цитаты) -->
         <div class="top-bar">
-            <a href="index.html" class="btn-back">← Назад к мемам</a>
+            <div class="top-nav-group">
+                <a href="index.html" class="btn-back">← Назад к мемам</a>
+                <a href="quotes.html" class="btn-back btn-quotes-link">💬 Цитаты</a>
+            </div>
             <button class="btn-toggle-all" id="toggleAllBtn">Развернуть все</button>
         </div>
 

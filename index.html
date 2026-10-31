@@ -267,37 +267,46 @@
             animation: secondsGlow 1.5s infinite alternate;
         }
 
-        /* === КНОПКА ПЕРЕХОДА НА СТРАНИЦУ ОГРАБЛЕНИЙ === */
+        /* === КНОПКИ ПЕРЕХОДА НА ОГРАБЛЕНИЯ И ЦИТАТЫ === */
         .heists-nav-wrapper {
             width: 100%;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
+            gap: 24px;
             margin-bottom: 55px;
         }
 
-        .btn-heists {
+        .btn-heists,
+        .btn-quotes {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding: 18px 46px;
+            min-width: 340px;
+            padding: 18px 42px;
             font-family: 'Oswald', sans-serif;
-            font-size: clamp(1.25rem, 3vw, 1.65rem);
+            font-size: clamp(1.25rem, 3vw, 1.6rem);
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
             letter-spacing: 2px;
-            color: #fff8dc;
-            background: linear-gradient(135deg, #ff8008 0%, #ff1e80 55%, #7b1fa2 100%);
-            border: 2px solid #ffd700;
             border-radius: 60px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75),
-                        0 0 25px rgba(255, 153, 0, 0.65),
-                        0 0 50px rgba(255, 30, 128, 0.45);
             transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
                         box-shadow 0.3s ease,
                         filter 0.3s ease;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+        }
+
+        /* Оранжево-розовый неон для кнопки Ограблений */
+        .btn-heists {
+            color: #fff8dc;
+            background: linear-gradient(135deg, #ff8008 0%, #ff1e80 55%, #7b1fa2 100%);
+            border: 2px solid #ffd700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75),
+                        0 0 25px rgba(255, 153, 0, 0.65),
+                        0 0 50px rgba(255, 30, 128, 0.45);
         }
 
         .btn-heists:hover {
@@ -308,7 +317,26 @@
             filter: brightness(1.1);
         }
 
-        .btn-heists:active {
+        /* Голубо-фиолетовый неон для кнопки Цитат */
+        .btn-quotes {
+            color: #e0faff;
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #7f00ff 100%);
+            border: 2px solid #00f2fe;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75),
+                        0 0 25px rgba(0, 229, 255, 0.65),
+                        0 0 50px rgba(127, 0, 255, 0.45);
+        }
+
+        .btn-quotes:hover {
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85),
+                        0 0 35px rgba(0, 242, 254, 0.95),
+                        0 0 70px rgba(127, 0, 255, 0.8);
+            filter: brightness(1.12);
+        }
+
+        .btn-heists:active,
+        .btn-quotes:active {
             transform: translateY(1px) scale(0.98);
         }
 
@@ -488,8 +516,13 @@
                 padding: 20px 16px;
                 border-radius: 18px;
             }
-            .btn-heists {
+            .heists-nav-wrapper {
+                gap: 16px;
+            }
+            .btn-heists,
+            .btn-quotes {
                 width: 100%;
+                min-width: unset;
                 padding: 16px 20px;
                 text-align: center;
             }
@@ -580,9 +613,10 @@
 
         </section>
 
-        <!-- КНОПКА ПЕРЕХОДА К ТАБЛИЦАМ ОГРАБЛЕНИЙ -->
+        <!-- КНОПКИ ПЕРЕХОДА К ОГРАБЛЕНИЯМ И ЦИТАТАМ -->
         <div class="heists-nav-wrapper">
             <a href="heists.html" class="btn-heists">🏦 Ограбления GTA Online</a>
+            <a href="quotes.html" class="btn-quotes">💬 Цитаты</a>
         </div>
 
         <!-- 3. СЕТКА С ВИДЕО (заполняется автоматически из JavaScript) -->
@@ -617,12 +651,14 @@
            ===================================================================== */
 
         // КАК ДОБАВИТЬ НОВОЕ ВИДЕО В ОДНУ СТРОЧКУ:
-        // 1. Положи видеофайл в папку "videos" (например, GTA3.mp4).
+        // 1. Положи видеофайл в папку "videos" (например, GTA5.mp4).
         // 2. Поставь запятую после последней фигурной скобки } и добавь строчку с названием, путём и датой:
-        //    { title: "Название мема", src: "videos/GTA3.mp4", date: "2026-10-30T19:00:00+02:00" }
+        //    { title: "Название мема", src: "videos/GTA5.mp4", date: "2026-10-30T19:00:00+02:00" }
         const videos = [
             { title: "Руслан человек", src: "videos/GTA1.mp4", date: "2026-10-23T18:05:37+02:00" },
-            { title: "Тореадор", src: "videos/GTA2.mp4", date: "2026-10-19T16:11:29+02:00" }
+            { title: "Тореадор", src: "videos/GTA2.mp4", date: "2026-10-19T16:11:29+02:00" },
+            { title: "Мем 3", src: "videos/GTA3.mp4", date: "2026-09-23T16:14:05+02:00" },
+            { title: "Мем 4", src: "videos/GTA4.mp4", date: "2026-10-14T20:09:19+02:00" }
         ];
 
 
