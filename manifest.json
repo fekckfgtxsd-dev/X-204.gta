@@ -1,0 +1,18 @@
+{
+  "name": "Мемы Гта5 Онлайн",
+  "short_name": "GTA Мемы",
+  "description": "Лучшие мемы, таймеры и таблицы ограблений GTA 5 Online",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d061a",
+  "theme_color": "#ff9900",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%23ff8008'/><stop offset='50%' stop-color='%23ff1e80'/><stop offset='100%' stop-color='%23180926'/></linearGradient></defs><rect width='512' height='512' rx='110' fill='url(%23g)'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-family='Impact, sans-serif' font-weight='900' font-size='210' fill='%23fff6b7' stroke='%23000' stroke-width='14'>GTA</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
