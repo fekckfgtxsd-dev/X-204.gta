@@ -61,6 +61,196 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* === ВЕРХНЯЯ АККУРАТНАЯ КНОПКА "ℹ️ ПОДРОБНЕЕ" === */
+        .top-info-bar {
+            position: absolute;
+            top: 22px;
+            right: 26px;
+            z-index: 20;
+        }
+
+        .btn-info-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.98rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #fff3b0;
+            background: rgba(20, 12, 34, 0.82);
+            border: 1.5px solid rgba(255, 153, 0, 0.65);
+            border-radius: 50px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65),
+                        0 0 15px rgba(255, 153, 0, 0.3);
+            transition: all 0.25s ease;
+        }
+
+        .btn-info-top:hover {
+            transform: translateY(-2px) scale(1.04);
+            border-color: #00e5ff;
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
+                        0 0 22px rgba(0, 229, 255, 0.65);
+        }
+
+        .btn-info-top:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* === МОДАЛЬНОЕ ОКНО "ПОДРОБНЕЕ" === */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 4, 16, 0.84);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: rgba(20, 12, 34, 0.95);
+            border: 2px solid rgba(255, 153, 0, 0.75);
+            border-radius: 22px;
+            padding: 30px 26px 26px;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.9),
+                        0 0 35px rgba(255, 115, 0, 0.35),
+                        inset 0 0 20px rgba(255, 0, 128, 0.12);
+            transform: translateY(25px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal-overlay.open .modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 153, 0, 0.5);
+            background: rgba(10, 5, 20, 0.8);
+            color: #fff3b0;
+            font-size: 1.5rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .modal-close:hover {
+            border-color: #ff2a85;
+            color: #ffffff;
+            background: rgba(255, 42, 133, 0.25);
+            box-shadow: 0 0 15px rgba(255, 42, 133, 0.6);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.2rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff3b0;
+            margin-bottom: 22px;
+            text-align: center;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9),
+                         0 0 18px rgba(255, 153, 0, 0.55);
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-item {
+            background: rgba(10, 5, 20, 0.82);
+            border: 1px solid rgba(255, 153, 0, 0.35);
+            border-left: 4px solid #ff9900;
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: inset 0 0 15px rgba(255, 42, 133, 0.08);
+        }
+
+        .info-item-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        /* Подсветка ников PRONAXS731 (голубой) и ArtemFix21 (оранжевый) */
+        .nick-pronaxs {
+            color: #00e5ff;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.75);
+        }
+
+        .nick-artem {
+            color: #ff9900;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(255, 153, 0, 0.75);
+        }
+
+        .info-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 12px;
+            font-size: 0.94rem;
+            color: #d8b4e2;
+        }
+
+        .info-date-text {
+            font-weight: 600;
+            color: #f3e8ff;
+        }
+
+        .info-badge-unknown {
+            font-size: 0.82rem;
+            padding: 3px 10px;
+            border-radius: 50px;
+            background: rgba(255, 42, 133, 0.18);
+            border: 1px solid rgba(255, 42, 133, 0.45);
+            color: #ffb3c6;
+            font-weight: 600;
+        }
+
+        .info-elapsed-line {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffae00;
+            text-shadow: 0 0 8px rgba(255, 153, 0, 0.45);
+        }
+
         /* === 1. ТИТУЛЬНЫЙ ЭКРАН (HERO) НА ВЕСЬ ЭКРАН === */
         .hero {
             min-height: 100vh;
@@ -70,7 +260,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 70px 20px 20px;
             position: relative;
         }
 
@@ -502,6 +692,43 @@
             text-shadow: 0 0 8px rgba(255, 153, 0, 0.45);
         }
 
+        /* === КНОПКА СКАЧИВАНИЯ ВИДЕО В КАРТОЧКЕ === */
+        .btn-download {
+            width: 100%;
+            min-height: 44px;
+            margin-top: 12px;
+            padding: 10px 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            color: #fff3b0;
+            background: rgba(12, 6, 24, 0.85);
+            border: 1.5px solid rgba(255, 153, 0, 0.55);
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5),
+                        0 0 12px rgba(255, 153, 0, 0.15);
+            transition: all 0.25s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            color: #ffffff;
+            background: linear-gradient(90deg, rgba(255, 128, 8, 0.28), rgba(255, 30, 128, 0.28));
+            border-color: #ffd700;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75),
+                        0 0 20px rgba(255, 153, 0, 0.55);
+        }
+
+        .btn-download:active {
+            transform: translateY(1px);
+        }
+
         /* === КНОПКА "СМОТРЕТЬ ЕЩЁ" === */
         .btn-more {
             margin-top: 50px;
@@ -563,6 +790,17 @@
         }
 
         @media (max-width: 600px) {
+            .top-info-bar {
+                top: 16px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+            .btn-info-top:hover {
+                transform: translateY(-2px);
+            }
+            .modal-card {
+                padding: 24px 18px 20px;
+            }
             .content-container {
                 padding: 15px 14px 50px;
             }
@@ -598,6 +836,10 @@
                 flex-direction: column;
                 gap: 4px;
             }
+            .btn-download {
+                min-height: 48px;
+                font-size: 1.1rem;
+            }
             .btn-more {
                 width: 100%;
                 max-width: 320px;
@@ -611,6 +853,11 @@
 
     <!-- 1. ТИТУЛЬНЫЙ ЭКРАН НА ВЕСЬ ЭКРАН (100vh) -->
     <header class="hero">
+        <!-- Небольшая аккуратная кнопка "ℹ️ Подробнее" в самом верху -->
+        <div class="top-info-bar">
+            <button type="button" class="btn-info-top" id="openInfoModalBtn">ℹ️ Подробнее</button>
+        </div>
+
         <h1 class="gta-title">Мемы Гта5 Онлайн</h1>
         <p class="hero-subtitle">Лучшие моменты из сессий Лос-Сантоса</p>
         <a href="#main-content" class="scroll-down">
@@ -618,6 +865,15 @@
             <span>▼</span>
         </a>
     </header>
+
+    <!-- МОДАЛЬНОЕ ОКНО "ПОДРОБНЕЕ" -->
+    <div class="modal-overlay" id="infoModalOverlay" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+        <div class="modal-card">
+            <button type="button" class="modal-close" id="closeInfoModalBtn" aria-label="Закрыть окно">&times;</button>
+            <h2 class="modal-title" id="infoModalTitle">Подробнее</h2>
+            <div class="info-list" id="infoModalList"></div>
+        </div>
+    </div>
 
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="content-container" id="main-content">
@@ -695,6 +951,29 @@
 
     <script>
         /* =====================================================================
+           0. СПИСОК СОБЫТИЙ ДЛЯ ОКНА "ПОДРОБНЕЕ"
+           ===================================================================== */
+
+        // КАК ДОБАВИТЬ ИЛИ ИЗМЕНИТЬ ПУНКТ В ОКНЕ «ПОДРОБНЕЕ»:
+        // Формат элемента: { title: "Название", date: "ГГГГ-ММ-ДД", time: "ЧЧ:ММ" }
+        // - Если дата пока не указана, оставь date: null (покажется «дата уточняется» без таймера).
+        // - Если дата известна (например "2025-10-30"), а время нет — оставь time: null (покажется «время неизвестно» и таймер в целых днях).
+        // - Если вписать дату во второй пункт, подсчёт прошедших дней включится автоматически!
+        const detailsEvents = [
+            {
+                title: "Первое пришествие PRONAXS731 и ArtemFix21",
+                date: "2025-10-30",
+                time: null
+            },
+            {
+                title: "Второе пришествие PRONAXS731 и ArtemFix21",
+                date: null,
+                time: null
+            }
+        ];
+
+
+        /* =====================================================================
            1. НАСТРОЙКИ ДАТ ДЛЯ ТАЙМЕРОВ (здесь их легко поменять)
            ===================================================================== */
 
@@ -726,7 +1005,104 @@
 
 
         /* =====================================================================
-           3. ФОРМАТИРОВАНИЕ ДАТЫ (Europe/Moscow) И СОЗДАНИЕ КАРТОЧЕК ВИДЕО
+           3. ЛОГИКА МОДАЛЬНОГО ОКНА "ПОДРОБНЕЕ"
+           ===================================================================== */
+        const MONTHS_RU = [
+            'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+        ];
+
+        const openInfoModalBtn = document.getElementById('openInfoModalBtn');
+        const closeInfoModalBtn = document.getElementById('closeInfoModalBtn');
+        const infoModalOverlay = document.getElementById('infoModalOverlay');
+        const infoModalList = document.getElementById('infoModalList');
+
+        // Подсвечивает ники PRONAXS731 (голубым) и ArtemFix21 (оранжевым)
+        function highlightNicknames(text) {
+            return text
+                .replace(/PRONAXS731/g, '<span class="nick-pronaxs">PRONAXS731</span>')
+                .replace(/ArtemFix21/g, '<span class="nick-artem">ArtemFix21</span>');
+        }
+
+        // Отрисовка и обновление пунктов внутри модального окна "Подробнее"
+        function renderInfoModal() {
+            infoModalList.innerHTML = '';
+
+            const now = new Date();
+            const todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+
+            detailsEvents.forEach(item => {
+                const elem = document.createElement('div');
+                elem.className = 'info-item';
+
+                const highlightedTitle = highlightNicknames(item.title);
+                let metaHTML = '';
+                let elapsedHTML = '';
+
+                if (!item.date) {
+                    // Если дата пока не указана
+                    metaHTML = `<span class="info-badge-unknown">дата уточняется</span>`;
+                } else {
+                    // Разбираем дату формата ГГГГ-ММ-ДД
+                    const [year, month, day] = item.date.split('-').map(Number);
+                    const formattedDateOnly = `${day} ${MONTHS_RU[month - 1]} ${year}`;
+
+                    const eventUTC = Date.UTC(year, month - 1, day);
+                    const diffDays = Math.max(0, Math.floor((todayUTC - eventUTC) / (1000 * 60 * 60 * 24)));
+
+                    if (!item.time || item.time === 'неизвестно') {
+                        metaHTML = `
+                            <span class="info-date-text">${formattedDateOnly}</span>
+                            <span class="info-badge-unknown">время неизвестно</span>
+                        `;
+                    } else {
+                        metaHTML = `<span class="info-date-text">${formattedDateOnly}, ${item.time}</span>`;
+                    }
+
+                    elapsedHTML = `<div class="info-elapsed-line">Прошло: ${diffDays} дн.</div>`;
+                }
+
+                elem.innerHTML = `
+                    <div class="info-item-title">${highlightedTitle}</div>
+                    <div class="info-item-meta">${metaHTML}</div>
+                    ${elapsedHTML}
+                `;
+
+                infoModalList.appendChild(elem);
+            });
+        }
+
+        function openInfoModal() {
+            renderInfoModal();
+            infoModalOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы под окном
+        }
+
+        function closeInfoModal() {
+            infoModalOverlay.classList.remove('open');
+            document.body.style.overflow = ''; // Возвращаем прокрутку страницы
+        }
+
+        openInfoModalBtn.addEventListener('click', openInfoModal);
+        closeInfoModalBtn.addEventListener('click', closeInfoModal);
+
+        // Закрытие по клику на тёмный полупрозрачный фон
+        infoModalOverlay.addEventListener('click', (e) => {
+            if (e.target === infoModalOverlay) {
+                closeInfoModal();
+            }
+        });
+
+        // Закрытие по клавише Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && infoModalOverlay.classList.contains('open')) {
+                closeInfoModal();
+            }
+        });
+
+
+        /* =====================================================================
+           4. ФОРМАТИРОВАНИЕ ДАТЫ (Europe/Moscow) И СОЗДАНИЕ КАРТОЧЕК ВИДЕО
            ===================================================================== */
 
         // Форматировщик по московскому времени, чтобы у всех посетителей показывалась одинаковая дата
@@ -750,6 +1126,12 @@
             return `${values.day} ${values.month} ${values.year}, ${values.hour}:${values.minute}`;
         }
 
+        // Убирает запрещённые для имён файлов символы (\ / : * ? " < > |) и добавляет .mp4
+        function getSafeDownloadFilename(title) {
+            const cleanTitle = title.replace(/[\\/:*?"<>|]/g, '').trim();
+            return (cleanTitle || 'video') + '.mp4';
+        }
+
         const videoGrid = document.getElementById('videoGrid');
 
         function renderVideos() {
@@ -760,6 +1142,7 @@
                 card.className = 'card';
 
                 const formattedDate = formatDisplayDate(item.date);
+                const downloadFilename = getSafeDownloadFilename(item.title);
 
                 card.innerHTML = `
                     <div class="video-wrapper">
@@ -773,6 +1156,7 @@
                         <span class="video-date">${formattedDate}</span>
                         <span class="video-elapsed" id="elapsed-${index}">Прошло: расчёт...</span>
                     </div>
+                    <a href="${item.src}" download="${downloadFilename}" class="btn-download">⬇ Скачать</a>
                 `;
 
                 videoGrid.appendChild(card);
@@ -815,7 +1199,7 @@
 
 
         /* =====================================================================
-           4. ЛОГИКА РАБОТЫ ТАЙМЕРОВ ОБРАТНОГО ОТСЧЁТА
+           5. ЛОГИКА РАБОТЫ ТАЙМЕРОВ ОБРАТНОГО ОТСЧЁТА
            ===================================================================== */
 
         // Функция добавляет ведущий ноль, чтобы цифры всегда были минимум из двух знаков (05 вместо 5)
@@ -912,7 +1296,7 @@
 
 
         /* =====================================================================
-           5. УВЕДОМЛЕНИЯ И УСТАНОВКА НА ТЕЛЕФОН КАК ПРИЛОЖЕНИЯ (PWA)
+           6. УВЕДОМЛЕНИЯ И УСТАНОВКА НА ТЕЛЕФОН КАК ПРИЛОЖЕНИЯ (PWA)
            ===================================================================== */
         const moreBtn = document.getElementById('moreBtn');
         const installAppBtn = document.getElementById('installAppBtn');
