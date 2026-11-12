@@ -109,6 +109,20 @@
                         0 0 25px rgba(0, 229, 255, 0.7);
         }
 
+        /* Пурпурное неоновое свечение для кнопки Угадай видео */
+        .btn-guess-link {
+            border-color: #ff75d8;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+                        0 0 15px rgba(183, 33, 255, 0.4);
+        }
+
+        .btn-guess-link:hover {
+            border-color: #ff75d8;
+            background: rgba(183, 33, 255, 0.25);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
+                        0 0 25px rgba(255, 117, 216, 0.75);
+        }
+
         .btn-toggle-all {
             padding: 10px 20px;
             font-family: 'Oswald', sans-serif;
@@ -455,11 +469,12 @@
 
     <div class="container">
 
-        <!-- Верхняя навигация (добавлена кнопка Цитаты) -->
+        <!-- Верхняя навигация (Назад, Цитаты, Угадай видео) -->
         <div class="top-bar">
             <div class="top-nav-group">
                 <a href="index.html" class="btn-back">← Назад к мемам</a>
                 <a href="quotes.html" class="btn-back btn-quotes-link">💬 Цитаты</a>
+                <a href="guess.html" class="btn-back btn-guess-link">🎮 Угадай видео</a>
             </div>
             <button class="btn-toggle-all" id="toggleAllBtn">Развернуть все</button>
         </div>

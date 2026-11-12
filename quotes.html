@@ -56,8 +56,15 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 30px;
+        }
+
+        .top-nav-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
         }
 
         .btn-nav {
@@ -99,6 +106,20 @@
             background: rgba(255, 42, 133, 0.25);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
                         0 0 25px rgba(255, 42, 133, 0.7);
+        }
+
+        /* Пурпурное неоновое свечение для кнопки Угадай видео */
+        .btn-nav-guess {
+            border-color: #ff75d8;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+                        0 0 15px rgba(183, 33, 255, 0.4);
+        }
+
+        .btn-nav-guess:hover {
+            border-color: #ff75d8;
+            background: rgba(183, 33, 255, 0.25);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8),
+                        0 0 25px rgba(255, 117, 216, 0.75);
         }
 
         /* === ГЛАВНЫЙ ЗАГОЛОВОК СТРАНИЦЫ === */
@@ -352,9 +373,10 @@
             body {
                 padding: 20px 14px 50px;
             }
-            .top-bar {
+            .top-bar, .top-nav-group {
                 flex-direction: column;
                 align-items: stretch;
+                width: 100%;
             }
             .btn-nav {
                 width: 100%;
@@ -379,10 +401,13 @@
 
     <div class="container">
 
-        <!-- Верхние кнопки навигации -->
+        <!-- Верхние кнопки навигации (Назад, Ограбления, Угадай видео) -->
         <nav class="top-bar" aria-label="Навигация по сайту">
-            <a href="index.html" class="btn-nav">← Назад к мемам</a>
-            <a href="heists.html" class="btn-nav btn-nav-heists">🏦 Ограбления</a>
+            <div class="top-nav-group">
+                <a href="index.html" class="btn-nav">← Назад к мемам</a>
+                <a href="heists.html" class="btn-nav btn-nav-heists">🏦 Ограбления</a>
+                <a href="guess.html" class="btn-nav btn-nav-guess">🎮 Угадай видео</a>
+            </div>
         </nav>
 
         <!-- Заголовок страницы -->
@@ -411,17 +436,17 @@
 
         // КАК ДОБАВИТЬ НОВУЮ ЦИТАТУ ОДНОЙ СТРОЧКОЙ:
         // Поставь запятую после последнего элемента и добавь объект:
-        // - Обычная цитата:   { text: "Текст цитаты", author: "ArtemFix21", section: "normal", date: "2026-10-30T18:00:00+02:00" }
+        // - Обычная цитата:   { text: "Текст цитаты", author: "ArtemFix21", section: "normal", date: "2026-10-30T18:00:00+03:00" }
         // - Запретное слово:  { text: "Текст", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Штурм" }
         // (Поля heist, approach, place и date необязательные — если их нет, просто не пиши их).
         const quotes = [
             // Раздел "normal" (Обычные цитаты)
             { text: "Васаби из раста", author: "ArtemFix21", section: "normal" },
             { text: "Пуцы Кацы", author: "ArtemFix21", section: "normal" },
-            { text: "Похоже ты нас везешь к Руслану человеку", author: "ArtemFix21", section: "normal", date: "2026-10-23T18:05:37+02:00" },
+            { text: "Похоже ты нас везешь к Руслану человеку", author: "ArtemFix21", section: "normal", date: "2026-10-23T18:05:37+03:00" },
 
             // Раздел "forbidden" (Запретные слова во время ограблений)
-            { text: "Щас крутая катсцена будет", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Штурм", date: "2026-10-04T17:23:45+02:00" },
+            { text: "Щас крутая катсцена будет", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Штурм", date: "2026-10-04T17:23:45+03:00" },
             { text: "Привет Сладкий", author: "Vovanplayer205", section: "forbidden", heist: "The Diamond Casino Heist", approach: "Подход: Обман" },
             { text: "Пьяное бревно", author: "ArtemFix21", section: "forbidden", heist: "The Cayo Perico Heist", place: "Возле канализации для входа в комплекс" }
         ];
@@ -430,23 +455,24 @@
         /* =====================================================================
            2. ФУНКЦИИ ФОРМАТИРОВАНИЯ ДАТ И АВТОРОВ
            ===================================================================== */
-        const MONTHS_RU = [
-            'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
-        ];
+        const moscowFormatter = new Intl.DateTimeFormat("ru-RU", {
+            timeZone: "Europe/Moscow",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
 
-        // Превращает строку "2026-10-04T17:23:45+02:00" в "4 октября 2026, 17:23"
+        // Превращает дату в формат "4 октября 2026, 17:23"
         function formatDisplayDate(isoString) {
-            const match = isoString.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
-            if (match) {
-                const year = match[1];
-                const monthIndex = parseInt(match[2], 10) - 1;
-                const day = parseInt(match[3], 10);
-                const hours = match[4];
-                const minutes = match[5];
-                return `${day} ${MONTHS_RU[monthIndex]} ${year}, ${hours}:${minutes}`;
-            }
-            return isoString;
+            const dateObj = new Date(isoString);
+            const parts = moscowFormatter.formatToParts(dateObj);
+            const values = {};
+            parts.forEach(part => {
+                values[part.type] = part.value;
+            });
+            return `${values.day} ${values.month} ${values.year}, ${values.hour}:${values.minute}`;
         }
 
         // Выбирает цветной CSS-класс для автора
@@ -553,7 +579,7 @@
 
         // Обновление живых таймеров "Прошло: X дн. Y ч. Z мин. W сек."
         function updateQuoteTimers() {
-            const now = new Date();
+            const nowMs = Date.now();
 
             quotes.forEach((item, index) => {
                 if (!item.date) return;
@@ -561,8 +587,8 @@
                 const elapsedEl = document.getElementById(`quote-elapsed-${index}`);
                 if (!elapsedEl) return;
 
-                const createdDate = new Date(item.date);
-                const diff = Math.max(0, now - createdDate);
+                const createdMs = new Date(item.date).getTime();
+                const diff = Math.max(0, nowMs - createdMs);
 
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
