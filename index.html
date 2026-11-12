@@ -206,8 +206,9 @@
             line-height: 1.35;
         }
 
-        /* Подсветка ников PRONAXS731 (голубой) и ArtemFix21 (оранжевый) */
-        .nick-pronaxs {
+        /* Подсветка ников PRONAXS731 / VovanPlayer205 (голубой) и ArtemFix21 (оранжевый) */
+        .nick-pronaxs,
+        .nick-vovan {
             color: #00e5ff;
             font-weight: 700;
             text-shadow: 0 0 12px rgba(0, 229, 255, 0.75);
@@ -958,7 +959,7 @@
         // Формат элемента: { title: "Название", date: "ГГГГ-ММ-ДД", time: "ЧЧ:ММ" }
         // - Если дата пока не указана, оставь date: null (покажется «дата уточняется» без таймера).
         // - Если дата известна (например "2025-10-30"), а время нет — оставь time: null (покажется «время неизвестно» и таймер в целых днях).
-        // - Если вписать дату во второй пункт, подсчёт прошедших дней включится автоматически!
+        // - Если указаны и date, и time (например date: "2026-09-16", time: "16:49") — включится точный посекундный таймер (дни, часы, минуты, секунды).
         const detailsEvents = [
             {
                 title: "Первое пришествие PRONAXS731 и ArtemFix21",
@@ -966,9 +967,9 @@
                 time: null
             },
             {
-                title: "Второе пришествие PRONAXS731 и ArtemFix21",
-                date: null,
-                time: null
+                title: "Второе пришествие VovanPlayer205 и ArtemFix21",
+                date: "2026-09-16",
+                time: "16:49"
             }
         ];
 
@@ -1005,7 +1006,7 @@
 
 
         /* =====================================================================
-           3. ЛОГИКА МОДАЛЬНОГО ОКНА "ПОДРОБНЕЕ"
+           3. ЛОГИКА МОДАЛЬНОГО ОКНА "ПОДРОБНЕЕ" И ЖИВОГО ОТСЧЁТА
            ===================================================================== */
         const MONTHS_RU = [
             'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
@@ -1017,21 +1018,19 @@
         const infoModalOverlay = document.getElementById('infoModalOverlay');
         const infoModalList = document.getElementById('infoModalList');
 
-        // Подсвечивает ники PRONAXS731 (голубым) и ArtemFix21 (оранжевым)
+        // Подсвечивает ники PRONAXS731 / VovanPlayer205 (голубым) и ArtemFix21 (оранжевым)
         function highlightNicknames(text) {
             return text
                 .replace(/PRONAXS731/g, '<span class="nick-pronaxs">PRONAXS731</span>')
+                .replace(/VovanPlayer205/gi, '<span class="nick-vovan">$&</span>')
                 .replace(/ArtemFix21/g, '<span class="nick-artem">ArtemFix21</span>');
         }
 
-        // Отрисовка и обновление пунктов внутри модального окна "Подробнее"
+        // Создание карточек внутри модального окна "Подробнее"
         function renderInfoModal() {
             infoModalList.innerHTML = '';
 
-            const now = new Date();
-            const todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-
-            detailsEvents.forEach(item => {
+            detailsEvents.forEach((item, index) => {
                 const elem = document.createElement('div');
                 elem.className = 'info-item';
 
@@ -1043,12 +1042,8 @@
                     // Если дата пока не указана
                     metaHTML = `<span class="info-badge-unknown">дата уточняется</span>`;
                 } else {
-                    // Разбираем дату формата ГГГГ-ММ-ДД
                     const [year, month, day] = item.date.split('-').map(Number);
                     const formattedDateOnly = `${day} ${MONTHS_RU[month - 1]} ${year}`;
-
-                    const eventUTC = Date.UTC(year, month - 1, day);
-                    const diffDays = Math.max(0, Math.floor((todayUTC - eventUTC) / (1000 * 60 * 60 * 24)));
 
                     if (!item.time || item.time === 'неизвестно') {
                         metaHTML = `
@@ -1059,7 +1054,7 @@
                         metaHTML = `<span class="info-date-text">${formattedDateOnly}, ${item.time}</span>`;
                     }
 
-                    elapsedHTML = `<div class="info-elapsed-line">Прошло: ${diffDays} дн.</div>`;
+                    elapsedHTML = `<div class="info-elapsed-line" id="info-elapsed-${index}">Прошло: расчёт...</div>`;
                 }
 
                 elem.innerHTML = `
@@ -1069,6 +1064,42 @@
                 `;
 
                 infoModalList.appendChild(elem);
+            });
+
+            updateInfoModalTimers();
+        }
+
+        // Живое обновление таймеров в окне "Подробнее" каждую секунду
+        function updateInfoModalTimers() {
+            const now = new Date();
+            const nowMs = now.getTime();
+            const todayUTC = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+
+            detailsEvents.forEach((item, index) => {
+                if (!item.date) return;
+
+                const elapsedEl = document.getElementById(`info-elapsed-${index}`);
+                if (!elapsedEl) return;
+
+                // Если время неизвестно — считаем только целые дни
+                if (!item.time || item.time === 'неизвестно') {
+                    const [year, month, day] = item.date.split('-').map(Number);
+                    const eventUTC = Date.UTC(year, month - 1, day);
+                    const diffDays = Math.max(0, Math.floor((todayUTC - eventUTC) / (1000 * 60 * 60 * 24)));
+                    elapsedEl.textContent = `Прошло: ${diffDays} дн.`;
+                } else {
+                    // Если время указано (например 16:49) — считаем точный отсчёт с часами, минутами и секундами (+03:00)
+                    const timeStr = item.time.length === 5 ? item.time + ':00' : item.time;
+                    const eventMs = new Date(`${item.date}T${timeStr}+03:00`).getTime();
+                    const diff = Math.max(0, nowMs - eventMs);
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+
+                    elapsedEl.textContent = `Прошло: ${days} дн. ${hours} ч. ${minutes} мин. ${seconds} сек.`;
+                }
             });
         }
 
@@ -1099,6 +1130,9 @@
                 closeInfoModal();
             }
         });
+
+        // Сразу создаём список для модального окна
+        renderInfoModal();
 
 
         /* =====================================================================
@@ -1288,6 +1322,9 @@
 
             // 3. Обновляем время с момента публикации каждого видео
             updateVideoElapsedTimers();
+
+            // 4. Обновляем живые таймеры в окне "Подробнее"
+            updateInfoModalTimers();
         }
 
         // Запускаем все таймеры сразу при открытии страницы и обновляем каждую секунду
